@@ -11,7 +11,7 @@
 In order for `ember-cli-visual-acceptance` to capture images, `"launch_in_ci"` must contain ethier `SlimerJsVisualAcceptance` or `PhantomJsVisualAcceptance`. 
  
 Example:
-[source,javascript]
+[source,json]
 .Testem.json
 ----
 {
@@ -40,6 +40,7 @@ Example:
 == Usage
 Inside an integration or acceptance test you can use `return capture('<image-label>')` at the end of an `it()` function.
 [source, javascript]
+.test.js
 ----
 it('renders', function () {
   // Set any properties with this.set('myProperty', 'value')
