@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://ewhite613.github.io/hubpress.io</link><generator>RSS for Node</generator><lastBuildDate>Mon, 18 Jul 2016 14:25:57 GMT</lastBuildDate><atom:link href="https://ewhite613.github.io/hubpress.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Using ember-cli-visual-acceptance]]></title><description><![CDATA[<div class="sect1">
+<h2 id="_installation">Installation</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre>Simple as running `ember install ember-cli-visual-acceptance`</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_testem_json">Testem.json</h3>
+<div class="paragraph">
+<p>In order for <code>ember-cli-visual-acceptance</code> to capture images, <code>"launch_in_ci"</code> must contain ethier <code>SlimerJsVisualAcceptance</code> or <code>PhantomJsVisualAcceptance</code>.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="title">Testem.json</div>
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">{
+  "framework": "mocha",
+  "test_page": "tests/index.html?hidepassed",
+  "disable_watching": true,
+  "launch_in_ci": [
+    "SlimerJsVisualAcceptance"
+  ],
+  "launch_in_dev": [
+    "Firefox"
+  ],
+  "launchers": {
+    "PhantomJsVisualAcceptance": {
+      "command": "phantomjs vendor/phantomjs-launcher.js &lt;url&gt;",
+      "protocol": "browser"
+    },
+    "SlimerJsVisualAcceptance": {
+      "command": "slimerjs -jsconsole vendor/phantomjs-launcher.js &lt;url&gt;",
+      "protocol": "browser"
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_usage">Usage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Inside an integration or acceptance test you can use <code>return capture('&lt;image-label&gt;')</code> at the end of an <code>it()</code> function.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">it('renders', function () {
+  // Set any properties with this.set('myProperty', 'value')
+  // Handle any actions with this.on('myAction', function (val) { ... })</code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  this.render(hbs`{{frost-file-picker}}`)
+  expect(this.$('.frost-file-picker')).to.have.length(1)
+  return capture('Basic-File-Picker')
+})</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>You can also use this functionality for async testing:</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">it('renders', function (done) {
+  // Set any properties with this.set('myProperty', 'value')
+  // Handle any actions with this.on('myAction', function (val) { ... })</code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  this.render(hbs`{{frost-file-picker}}`)
+  expect(this.$('.frost-file-picker')).to.have.length(1)
+  capture('Basic-File-Picker').then(function (data) {
+    console.log(arguments)
+    done()
+  }).catch(function (err) {
+    done(err)
+  })
+})</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case done comes from <code>it('test', function (done) { &#8230;&#8203; }</code>. You can also use the <code>then</code> functionality to get creative rather than using done.
+<code>arguments</code> will display the response from ResembleJS or the message, <code>'No passed image. Saving current test as base'</code> (If there is no current baseline image).</p>
+</div>
+<div class="sect2">
+<h3 id="_usage_with_qunit">Usage with Qunit</h3>
+<div class="paragraph">
+<p>To use with Qunit you must supply the <code>assert</code> parameter.</p>
+</div>
+<div class="paragraph">
+<p>Example (Using [ember-cli-showdown](<a href="https://github.com/gcollazo/ember-cli-showdown/blob/master/tests/integration/components/markdown-to-html-test.js)" class="bare">https://github.com/gcollazo/ember-cli-showdown/blob/master/tests/integration/components/markdown-to-html-test.js)</a>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import hbs from 'htmlbars-inline-precompile';
+import { moduleForComponent, test } from 'ember-qunit';</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>moduleForComponent('markdown-to-html', 'Integration | Component | markdown to html', {
+  integration: true
+});</p>
+</div>
+<div class="paragraph">
+<p>test('positional parameter', function(assert) {
+  assert.expect(1);</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  this.set('markdown', '*hello world*');
+  this.render(hbs`{{markdown-to-html markdown}}`);
+  assert.equal(this.$('&gt; *').html(), '&lt;p&gt;&lt;em&gt;hello world&lt;/em&gt;&lt;/p&gt;');
+  return capture('Markdown', null, null, 0.00, null, assert);
+});</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_larger_frame">Larger frame</h4>
+<div class="paragraph">
+<p>In order to go beyond the default 640x340px dimensions you can supply the width and height to the capture function. The following shows an example to get a 1920x4041 container: <code>capture('&lt;image-label&gt;', 1920, 4041)</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_targeting_an_element">Targeting an element</h4>
+<div class="paragraph">
+<p>ember-cli-visual-acceptance also has the ability to target a specific element. Given a DOM element ember-cli-visual-acceptance will capture the specified element rather than the default <code>#ember-testing-container</code>. To target an element you must pass in the DOM element.</p>
+</div>
+<div class="sect4">
+<h5 id="_target_with_an_id">Target with an id</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">capture('Markdown', null, null, 0.00, document.getElementById('foo'));</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_target_with_class_selectors">Target with class selectors</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">capture('drop-down-container', null, null, 0.00, this.$('.drop-down-container')[0])</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_setting_up_travis">Setting up travis</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Replace <code>ember test</code> with <code>ember tva</code>. This command comes with <code>ember-cli-visual-acceptance</code> and provides the functionality for commenting  a report (Stored on Imgur) on a PR from the Travis build.</p>
+</div>
+<div class="paragraph">
+<p>Add your github credentials to <code>before_script:</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">before_script:
+- git config --global user.email "ericwhite613@gmail.com"
+- git config --global user.name "Eric White"
+- git config --global push.default simple
+- npm set progress=false
+- git config credential.helper "store --file=.git/credentials"
+- echo "https://${GH_TOKEN}:@github.com" &gt; .git/credentials</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Secure Variables (Display value in build log = <code>OFF</code>)</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Add <code>GH_TOKEN</code> to Travis. Personal Access Token must have push access</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Unsecure Variables (Display value in build log = <code>ON</code>)</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Add <code>RO_GH_TOKEN</code> Unsecure token that can only read.</p>
+</li>
+<li>
+<p>Add <code>VISUAL_ACCEPTANCE_TOKEN</code> token, value can be found [here](<a href="https://travis-ci.org/ciena-frost/ember-frost-file-picker/jobs/137522760#L275" class="bare">https://travis-ci.org/ciena-frost/ember-frost-file-picker/jobs/137522760#L275</a>)</p>
+</li>
+<li>
+<p>If you put the <code>VISUAL_ACCEPTANCE_TOKEN</code> directly in your code and commit it to Github; Github will revoke the token.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_browsers_html2canvas_vs_phantomjs_render_callback">Browsers - html2canvas vs. PhantomJS render callback</h3>
+<div class="paragraph">
+<p>You must enable the display to use headless browsers by adding the following to the <code>before_script</code> hook:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">before_script:
+- "export DISPLAY=:99.0"
+- "sh -e /etc/init.d/xvfb start"
+- sleep 3 # give xvfb some time to start</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_phantomjs_slimerjs">PhantomJS - SlimerJS</h4>
+<div class="paragraph">
+<p>[PhantomJS](<a href="http://phantomjs.org/" class="bare">http://phantomjs.org/</a>) and [SlimerJS](<a href="https://slimerjs.org/" class="bare">https://slimerjs.org/</a>) can both be used with this tool to capture images.</p>
+</div>
+<div class="paragraph">
+<p>Personally I prefer using SlimerJS as their version of Gecko matches the latest Firefox. While PhantomJS Webkit is about a year behind Safari&#8217;s Webkit version. <code>SlimerJsVisualAcceptance</code> images come out much more accurate. Additionally, debugging the images produced from the <code>.ember-testing-container</code> in Firefox is useful. Since the <code>.ember-testing-container</code> is identical in SlimerJS and Firefox ( at least I&#8217;ve never seen a difference between the two).</p>
+</div>
+<div class="sect4">
+<h5 id="_warning">Warning</h5>
+<div class="paragraph">
+<p>With certain repositories I&#8217;ve had trouble with SlimerJS having segmentation faults on both Linux and Mac. I&#8217;ve yet to resolve this issue.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_html2canvas">Html2Canvas</h4>
+<div class="paragraph">
+<p>Html2Canvas is used when a browser does not have the function <code>window.callPhantom</code> (Only PhantomJS and SlimerJS have this defined). Html2Canvas is still in beta and as result you will see some issues.
+Html2Canvas relies on Canvas drawing support. I find Chrome has the best Canvas drawing support (miles ahead of their competitors), while Firefox has the second best Canvas drawing support.</p>
+</div>
+<div class="sect4">
+<h5 id="_svgs">SVGs</h5>
+<div class="paragraph">
+<p>Html2Canvas has difficulties rendering SVGs (more so in Firefox than in Chrome). As a result I have added a new <strong>expermental</strong> functionality that attempts to render the svgs better.
+You can use this experimental feature by setting <code>experimentalSvgs</code> to <code>true</code> (Example: <code>capture('svg-experimental', null, null, 0.00, null, true)</code>).</p>
+</div>
+<div class="paragraph">
+<p>Experimental SVGs will not be used for PhantomJS and SlimerJS as their rendering handles SVGs (since it&#8217;s basically just a simple screenshot of the page)</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_firefox">Using Firefox</h4>
+<div class="paragraph">
+<p>To use Firefox in Travis simply set</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">  // Testem.json
+  "launch_in_ci": [
+    "Firefox"
+  ],</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And add the following to your <code>.travis.yml</code> to get the latest version of Firefox:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">addons:
+  firefox: "latest"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_slimerjs">Using SlimerJS</h4>
+<div class="listingblock">
+<div class="title">Testem.json</div>
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">{
+  "framework": "mocha",
+  "test_page": "tests/index.html?hidepassed",
+  "disable_watching": true,
+  "launch_in_ci": [
+    "SlimerJsVisualAcceptance"
+  ],
+  "launch_in_dev": [
+    "Firefox"
+  ],
+  "launchers": {
+    "PhantomJsVisualAcceptance": {
+      "command": "phantomjs vendor/phantomjs-launcher.js &lt;url&gt;",
+      "protocol": "browser"
+    },
+    "SlimerJsVisualAcceptance": {
+      "command": "slimerjs -jsconsole vendor/phantomjs-launcher.js &lt;url&gt;",
+      "protocol": "browser"
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_phantomjs">Using PhantomJS</h4>
+<div class="listingblock">
+<div class="title">Testem.json</div>
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">{
+  "framework": "mocha",
+  "test_page": "tests/index.html?hidepassed",
+  "disable_watching": true,
+  "launch_in_ci": [
+    "PhantomJsVisualAcceptance"
+  ],
+  "launch_in_dev": [
+    "Safari"
+  ],
+  "launchers": {
+    "PhantomJsVisualAcceptance": {
+      "command": "phantomjs vendor/phantomjs-launcher.js &lt;url&gt;",
+      "protocol": "browser"
+    },
+    "SlimerJsVisualAcceptance": {
+      "command": "slimerjs -jsconsole vendor/phantomjs-launcher.js &lt;url&gt;",
+      "protocol": "browser"
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reports_for_multiple_browsers">Reports for  multiple browsers</h3>
+<div class="paragraph">
+<p>Producing a report for multiple browsers is perfectly fine. All you need to do is add your collection of browsers to <code>launch_in_ci</code>.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="title">Testem.json</div>
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">"launch_in_ci": [
+    "Firefox",
+    "SlimerJsVisualAcceptance"
+  ],</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__code_timeout_of_2000ms_exceeded_code"><code>timeout of 2000ms exceeded</code></h3>
+<div class="paragraph">
+<p>With Travis you may find you see this error a few times. Sometimes Travis can take a while to run capture (especially if you&#8217;re using experimentalSvgs and have a lot of svgs on the page), and exceeds the timeout.</p>
+</div>
+<div class="paragraph">
+<p>To resolve this simply increase the timeout by doing <code>this.timeout(5000)</code> in Mocha. I believe in Qunit you do <code>QUnit.config.testTimeout = 5000</code>.</p>
+</div>
+<div class="paragraph">
+<p>In Mocha you can also set the timeout globally in <code>test-helper.js</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">test-helper.js</div>
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import resolver from './helpers/resolver'
+import { setResolver } from 'ember-mocha'
+import { mocha } from 'mocha'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>mocha.setup({
+  // customize as needed
+  timeout: 5000
+})
+setResolver(resolver)</p>
+</div>
+<div class="paragraph">
+<p>In <code>describeComponent</code> there is no <code>this.timeout</code>. So you can set the timeout in the beforeEach fucntion by doing</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">describeComponent(
+  'frost-select',
+  'Integration: FrostSelectComponent',
+  {
+    integration: true
+  },
+  function () {
+    let props
+    let dropDown
+    beforeEach(function () {
+      this.test._timeout = 6000
+    })
+    ...
+})</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_notes">Notes</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Travis will upload the reports to Imgur</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you would like to help or have ideas on improving this tool I&#8217;m available on the Ember community slack @ewhite613 - issues and PRs also welcome :)</p>
+</div>
+</div>
+</div>
+</div>
+</div>]]></description><link>https://ewhite613.github.io/hubpress.io/2016/07/18/Using-ember-cli-visual-acceptance.html</link><guid isPermaLink="true">https://ewhite613.github.io/hubpress.io/2016/07/18/Using-ember-cli-visual-acceptance.html</guid><category><![CDATA[ember-cli-visual-acceptance]]></category><category><![CDATA[ Blog]]></category><category><![CDATA[ Open Source]]></category><category><![CDATA[ Visual Regression]]></category><dc:creator><![CDATA[Eric White]]></dc:creator><pubDate>Mon, 18 Jul 2016 00:00:00 GMT</pubDate></item></channel></rss>
