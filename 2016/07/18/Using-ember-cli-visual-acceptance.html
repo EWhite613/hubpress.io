@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="https://ewhite613.github.io/hubpress.io/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="//ewhite613.github.io/hubpress.io/themes/casper/assets/css/screen.css?v=1468851957883" />
+    <link rel="stylesheet" type="text/css" href="//ewhite613.github.io/hubpress.io/themes/casper/assets/css/screen.css?v=1468852256784" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
 
     <link rel="canonical" href="https://ewhite613.github.io/hubpress.io/2016/07/18/Using-ember-cli-visual-acceptance.html" />
@@ -430,15 +430,13 @@ You can use this experimental feature by setting <code>experimentalSvgs</code> t
 <div class="content">
 <pre class="highlight"><code class="language-javascript" data-lang="javascript">import resolver from './helpers/resolver'
 import { setResolver } from 'ember-mocha'
-import { mocha } from 'mocha'</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>mocha.setup({
+import { mocha } from 'mocha'
+mocha.setup({
   // customize as needed
   timeout: 5000
 })
-setResolver(resolver)</p>
+setResolver(resolver)</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>In <code>describeComponent</code> there is no <code>this.timeout</code>. So you can set the timeout in the beforeEach fucntion by doing</p>
@@ -546,8 +544,8 @@ setResolver(resolver)</p>
         hljs.initHighlightingOnLoad();
       </script>
 
-    <script type="text/javascript" src="//ewhite613.github.io/hubpress.io/themes/casper/assets/js/jquery.fitvids.js?v=1468851957883"></script>
-    <script type="text/javascript" src="//ewhite613.github.io/hubpress.io/themes/casper/assets/js/index.js?v=1468851957883"></script>
+    <script type="text/javascript" src="//ewhite613.github.io/hubpress.io/themes/casper/assets/js/jquery.fitvids.js?v=1468852256784"></script>
+    <script type="text/javascript" src="//ewhite613.github.io/hubpress.io/themes/casper/assets/js/index.js?v=1468852256784"></script>
 
 </body>
 </html>
