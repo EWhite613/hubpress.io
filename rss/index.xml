@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://ewhite613.github.io/hubpress.io</link><generator>RSS for Node</generator><lastBuildDate>Mon, 18 Jul 2016 17:51:24 GMT</lastBuildDate><atom:link href="https://ewhite613.github.io/hubpress.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Using ember-cli-visual-acceptance]]></title><description><![CDATA[<div class="sect1">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://ewhite613.github.io/hubpress.io</link><generator>RSS for Node</generator><lastBuildDate>Tue, 19 Jul 2016 15:37:14 GMT</lastBuildDate><atom:link href="https://ewhite613.github.io/hubpress.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Using ember-cli-visual-acceptance]]></title><description><![CDATA[<div class="sect1">
 <h2 id="_installation">Installation</h2>
 <div class="sectionbody">
 <div class="literalblock">
@@ -110,14 +110,14 @@ test('positional parameter', function(assert) {
   this.set('markdown', '*hello world*');
   this.render(hbs`{{markdown-to-html markdown}}`);
   assert.equal(this.$('&gt; *').html(), '&lt;p&gt;&lt;em&gt;hello world&lt;/em&gt;&lt;/p&gt;');
-  return capture('Markdown', null, null, 0.00, null, assert);
+  return capture('Markdown', {assert: assert});
 });</code></pre>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_larger_frame">Larger frame</h4>
 <div class="paragraph">
-<p>In order to go beyond the default 640x340px dimensions you can supply the width and height to the capture function. The following shows an example to get a 1920x4041 container: <code>capture('&lt;image-label&gt;', 1920, 4041)</code>.</p>
+<p>In order to go beyond the default 640x340px dimensions you can supply the width and height to the capture function. The following shows an example to get a 1920x4041 container: <code>capture('&lt;image-label&gt;', {width: 1920, height: 4041}))</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -129,7 +129,7 @@ test('positional parameter', function(assert) {
 <h5 id="_target_with_an_id">Target with an id</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-javascript" data-lang="javascript">capture('Markdown', null, null, 0.00, document.getElementById('foo'));</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">capture('Markdown', { targetElement: document.getElementById('foo')});</code></pre>
 </div>
 </div>
 </div>
@@ -137,7 +137,7 @@ test('positional parameter', function(assert) {
 <h5 id="_target_with_class_selectors">Target with class selectors</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-javascript" data-lang="javascript">capture('drop-down-container', null, null, 0.00, this.$('.drop-down-container')[0])</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">capture('drop-down-container', { targetElement: this.$('.drop-down-container')[0]})</code></pre>
 </div>
 </div>
 </div>
@@ -229,7 +229,7 @@ Html2Canvas relies on Canvas drawing support. I find Chrome has the best Canvas 
 <h5 id="_svgs">SVGs</h5>
 <div class="paragraph">
 <p>Html2Canvas has difficulties rendering SVGs (more so in Firefox than in Chrome). As a result I have added a new <strong>expermental</strong> functionality that attempts to render the svgs better.
-You can use this experimental feature by setting <code>experimentalSvgs</code> to <code>true</code> (Example: <code>capture('svg-experimental', null, null, 0.00, null, true)</code>).</p>
+You can use this experimental feature by setting <code>experimentalSvgs</code> to <code>true</code> (Example: <code>capture('svg-experimental',{ experimentalSvgs: true})</code>).</p>
 </div>
 <div class="paragraph">
 <p>Experimental SVGs will not be used for PhantomJS and SlimerJS as their rendering handles SVGs (since it&#8217;s basically just a simple screenshot of the page)</p>
