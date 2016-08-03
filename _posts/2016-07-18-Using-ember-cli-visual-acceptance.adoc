@@ -4,7 +4,8 @@
 
 
 == Installation
- Simple as running `ember install ember-cli-visual-acceptance`
+
+Simple as running `ember install ember-cli-visual-acceptance`
 
 === Testem.json
 
