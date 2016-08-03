@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://ewhite613.github.io/hubpress.io</link><generator>RSS for Node</generator><lastBuildDate>Fri, 22 Jul 2016 15:06:14 GMT</lastBuildDate><atom:link href="https://ewhite613.github.io/hubpress.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Using ember-cli-visual-acceptance]]></title><description><![CDATA[<div class="sect1">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://ewhite613.github.io/hubpress.io</link><generator>RSS for Node</generator><lastBuildDate>Wed, 03 Aug 2016 14:16:18 GMT</lastBuildDate><atom:link href="https://ewhite613.github.io/hubpress.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Using ember-cli-visual-acceptance]]></title><description><![CDATA[<div class="sect1">
 <h2 id="_installation">Installation</h2>
 <div class="sectionbody">
 <div class="literalblock">
@@ -94,7 +94,7 @@
 <p>To use with Qunit you must supply the <code>assert</code> parameter.</p>
 </div>
 <div class="paragraph">
-<p>Example (Using [ember-cli-showdown](<a href="https://github.com/gcollazo/ember-cli-showdown/blob/master/tests/integration/components/markdown-to-html-test.js)" class="bare">https://github.com/gcollazo/ember-cli-showdown/blob/master/tests/integration/components/markdown-to-html-test.js)</a>):</p>
+<p>Example (Using <a href="https://github.com/gcollazo/ember-cli-showdown/blob/master/tests/integration/components/markdown-to-html-test.js">ember-cli-showdown</a>):</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -184,7 +184,7 @@ test('positional parameter', function(assert) {
 <p>Add <code>RO_GH_TOKEN</code> Unsecure token that can only read.</p>
 </li>
 <li>
-<p>Add <code>VISUAL_ACCEPTANCE_TOKEN</code> token, value can be found [here](<a href="https://travis-ci.org/ciena-frost/ember-frost-file-picker/jobs/137522760#L275" class="bare">https://travis-ci.org/ciena-frost/ember-frost-file-picker/jobs/137522760#L275</a>)</p>
+<p>Add <code>VISUAL_ACCEPTANCE_TOKEN</code> token, value can be found <a href="https://travis-ci.org/ciena-frost/ember-frost-file-picker/jobs/137522760#L275">here</a></p>
 </li>
 <li>
 <p>If you put the <code>VISUAL_ACCEPTANCE_TOKEN</code> directly in your code and commit it to Github; Github will revoke the token.</p>
@@ -207,7 +207,7 @@ test('positional parameter', function(assert) {
 <div class="sect3">
 <h4 id="_phantomjs_slimerjs">PhantomJS - SlimerJS</h4>
 <div class="paragraph">
-<p>[PhantomJS](<a href="http://phantomjs.org/" class="bare">http://phantomjs.org/</a>) and [SlimerJS](<a href="https://slimerjs.org/" class="bare">https://slimerjs.org/</a>) can both be used with this tool to capture images.</p>
+<p><a href="http://phantomjs.org/">PhantomJS</a> and <a href="https://slimerjs.org/">SlimerJS</a> can both be used with this tool to capture images.</p>
 </div>
 <div class="paragraph">
 <p>Personally I prefer using SlimerJS as their version of Gecko matches the latest Firefox. While PhantomJS Webkit is about a year behind Safari&#8217;s Webkit version. <code>SlimerJsVisualAcceptance</code> images come out much more accurate. Additionally, debugging the images produced from the <code>.ember-testing-container</code> in Firefox is useful. Since the <code>.ember-testing-container</code> is identical in SlimerJS and Firefox ( at least I&#8217;ve never seen a difference between the two).</p>
