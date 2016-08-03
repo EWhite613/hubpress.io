@@ -78,7 +78,7 @@ In this case done comes from `it('test', function (done) { ... }`. You can also 
 === Usage with Qunit
 To use with Qunit you must supply the `assert` parameter.
 
-Example (Using [ember-cli-showdown](https://github.com/gcollazo/ember-cli-showdown/blob/master/tests/integration/components/markdown-to-html-test.js)): 
+Example (Using link:https://github.com/gcollazo/ember-cli-showdown/blob/master/tests/integration/components/markdown-to-html-test.js[ember-cli-showdown]): 
 
 [source, javascript]
 ----
@@ -140,7 +140,7 @@ before_script:
 
 * Add `RO_GH_TOKEN` Unsecure token that can only read.
 
-* Add `VISUAL_ACCEPTANCE_TOKEN` token, value can be found [here](https://travis-ci.org/ciena-frost/ember-frost-file-picker/jobs/137522760#L275)
+* Add `VISUAL_ACCEPTANCE_TOKEN` token, value can be found link:https://travis-ci.org/ciena-frost/ember-frost-file-picker/jobs/137522760#L275[here]
   * If you put the `VISUAL_ACCEPTANCE_TOKEN` directly in your code and commit it to Github; Github will revoke the token.
 
 === Browsers - html2canvas vs. PhantomJS render callback
@@ -157,7 +157,7 @@ before_script:
 
 ==== PhantomJS - SlimerJS
 
-[PhantomJS](http://phantomjs.org/) and [SlimerJS](https://slimerjs.org/) can both be used with this tool to capture images.
+link:http://phantomjs.org/[PhantomJS] and link:https://slimerjs.org/[SlimerJS] can both be used with this tool to capture images.
 
 Personally I prefer using SlimerJS as their version of Gecko matches the latest Firefox. While PhantomJS Webkit is about a year behind Safari's Webkit version. `SlimerJsVisualAcceptance` images come out much more accurate. Additionally, debugging the images produced from the `.ember-testing-container` in Firefox is useful. Since the `.ember-testing-container` is identical in SlimerJS and Firefox ( at least I've never seen a difference between the two).
 
