@@ -11,16 +11,16 @@
     <link href="//fonts.googleapis.com/css?family=Noto+Sans:300,400,700" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href="//ewhite613.github.io/hubpress.io/themes/saga/assets/css/style.css?v=1470234204697" rel="stylesheet" type="text/css">
-    <link href="//ewhite613.github.io/hubpress.io/themes/saga/assets/css/animate.min.css?v=1470234204697" rel="stylesheet" type="text/css">
+    <link href="//ewhite613.github.io/hubpress.io/themes/saga/assets/css/style.css?v=1470757563278" rel="stylesheet" type="text/css">
+    <link href="//ewhite613.github.io/hubpress.io/themes/saga/assets/css/animate.min.css?v=1470757563278" rel="stylesheet" type="text/css">
     <link href="https://ewhite613.github.io/hubpress.io/favicon.ico" rel="shortcut icon">
-    <link href="//ewhite613.github.io/hubpress.io/themes/saga/assets/css/railcasts.css?v=1470234204697" rel="stylesheet" type="text/css">
+    <link href="//ewhite613.github.io/hubpress.io/themes/saga/assets/css/railcasts.css?v=1470757563278" rel="stylesheet" type="text/css">
     <link rel="canonical" href="https://ewhite613.github.io/hubpress.io/2016/07/18/Using-ember-cli-visual-acceptance.html" />
     <meta name="referrer" content="origin" />
     
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Using ember-cli-visual-acceptance" />
-    <meta property="og:description" content="Installation Simple as running ember install ember-cli-visual-acceptance Testem.json In order for ember-cli-visual-acceptance to capture images, &quot;launch_in_ci&quot; must contain ethier SlimerJsVisualAcceptance or PhantomJsVisualAcceptance. Example: Testem.json {   &quot;framework&quot;: &quot;mocha&quot;,   &quot;test_page&quot;: &quot;tests/index.html?hidepassed&quot;,   &quot;disable_watching&quot;:" />
+    <meta property="og:description" content="Installation Simple as running ember install ember-cli-visual-acceptance Testem.json In order for ember-cli-visual-acceptance to capture images, &quot;launch_in_ci&quot; must contain ethier SlimerJsVisualAcceptance or PhantomJsVisualAcceptance. Example: {   &quot;framework&quot;: &quot;mocha&quot;,   &quot;test_page&quot;: &quot;tests/index.html?hidepassed&quot;,   &quot;disable_watching&quot;: true,   &quot;la" />
     <meta property="og:url" content="https://ewhite613.github.io/hubpress.io/2016/07/18/Using-ember-cli-visual-acceptance.html" />
     <meta property="article:tag" content="ember-cli-visual-acceptance" />
     <meta property="article:tag" content=" Blog" />
@@ -29,7 +29,7 @@
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Using ember-cli-visual-acceptance" />
-    <meta name="twitter:description" content="Installation Simple as running ember install ember-cli-visual-acceptance Testem.json In order for ember-cli-visual-acceptance to capture images, &quot;launch_in_ci&quot; must contain ethier SlimerJsVisualAcceptance or PhantomJsVisualAcceptance. Example: Testem.json {   &quot;framework&quot;: &quot;mocha&quot;,   &quot;test_page&quot;: &quot;tests/index.html?hidepassed&quot;,   &quot;disable_watching&quot;:" />
+    <meta name="twitter:description" content="Installation Simple as running ember install ember-cli-visual-acceptance Testem.json In order for ember-cli-visual-acceptance to capture images, &quot;launch_in_ci&quot; must contain ethier SlimerJsVisualAcceptance or PhantomJsVisualAcceptance. Example: {   &quot;framework&quot;: &quot;mocha&quot;,   &quot;test_page&quot;: &quot;tests/index.html?hidepassed&quot;,   &quot;disable_watching&quot;: true,   &quot;la" />
     <meta name="twitter:url" content="https://ewhite613.github.io/hubpress.io/2016/07/18/Using-ember-cli-visual-acceptance.html" />
     
     <script type="application/ld+json">
@@ -54,7 +54,7 @@ null
     </section>
     <section class="header-content">
         <h1 class="post-title animated fadeInUp">Using ember-cli-visual-acceptance</h1>
-        <span class="post-data"><span class="date animated fadeInUp"><i class="fa fa-clock-o"></i> <time class="timesince date" data-timesince="1468814400" datetime="2016-07-18T00:00" title="18 July 2016">16 days ago</time></span>
+        <span class="post-data"><span class="date animated fadeInUp"><i class="fa fa-clock-o"></i> <time class="timesince date" data-timesince="1468814400" datetime="2016-07-18T00:00" title="18 July 2016">22 days ago</time></span>
             <span class="tags animated fadeInUp"><i class="fa fa-tags"></i> <a href="https://ewhite613.github.io/hubpress.io/tag/ember-cli-visual-acceptance/">ember-cli-visual-acceptance</a>, <a href="https://ewhite613.github.io/hubpress.io/tag/Blog/"> Blog</a>, <a href="https://ewhite613.github.io/hubpress.io/tag/Open-Source/"> Open Source</a>, <a href="https://ewhite613.github.io/hubpress.io/tag/Visual-Regression/"> Visual Regression</a></span>
             <span class="author animated fadeInUp"><i class="fa fa-user"></i> <a href="https://ewhite613.github.io/hubpress.io/author/EWhite613/">Eric White</a></span></span>
     </section>
@@ -78,7 +78,6 @@ null
 <p>Example:</p>
 </div>
 <div class="listingblock">
-<div class="title">Testem.json</div>
 <div class="content">
 <pre class="highlight"><code class="language-json" data-lang="json">{
   "framework": "mocha",
@@ -506,7 +505,7 @@ setResolver(resolver)</code></pre>
 
         hljs.initHighlightingOnLoad();
       </script>
-    <script src="//ewhite613.github.io/hubpress.io/themes/saga/assets/js/scripts.js?v=1470234204697"></script>
+    <script src="//ewhite613.github.io/hubpress.io/themes/saga/assets/js/scripts.js?v=1470757563278"></script>
     
 </body>
 </html>
