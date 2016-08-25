@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://ciena-blueplanet.github.io/developers.blog</link><generator>RSS for Node</generator><lastBuildDate>Thu, 25 Aug 2016 15:17:19 GMT</lastBuildDate><atom:link href="https://ciena-blueplanet.github.io/developers.blog/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Faster acceptance tests]]></title><description><![CDATA[<div class="paragraph">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://ciena-blueplanet.github.io/developers.blog</link><generator>RSS for Node</generator><lastBuildDate>Thu, 25 Aug 2016 19:18:27 GMT</lastBuildDate><atom:link href="https://ciena-blueplanet.github.io/developers.blog/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Faster acceptance tests]]></title><description><![CDATA[<div class="paragraph">
 <p>You may have noticed that when working with <code>ember-cli-mocha</code>, acceptance tests created with</p>
 </div>
 <div class="listingblock">
@@ -7,7 +7,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>Can run rather slowly if you use proper BDD ettiquette and include an <code>it()</code> for every <code>expect()</code>. This is due primarily to the fact that the application is created in a top-level <code>beforeEach()</code> and destroyed in a top-level <code>afterEach()</code> While this makes your tests very nicely independent, it can also make your tests rather slow, since the app is created and your route rendererd independently for each <code>it()</code>.</p>
+<p>Can run rather slowly if you use proper BDD ettiquette and include an <code>it()</code> for every <code>expect()</code>. This is due primarily to the fact that the application is created in a top-level <code>beforeEach()</code> and destroyed in a top-level <code>afterEach()</code> While this makes your tests very nicely independenty, it can also make your tests rather slow, since the app is created and your route rendererd independently for each <code>it()</code>.</p>
 </div>
 <div class="paragraph">
 <p>If you&#8217;re like me, you often set up a scenario in your <code>beforeEach()</code> and then have a few different things you want to verify expected behavior for, without changing the state of your application. In cases like those, what you really want is <code>before()</code> and <code>after()</code> instead of <code>beforeEach()</code> and <code>afterEach()</code>. Inside a <code>describe()</code>, <code>before()</code> is executed once, then all the <code>it()</code> methods are executed, then the <code>after()</code> is executed once. On the other hand, as the name suggests <code>beforeEach()</code> is exectued before each individual <code>it()</code> method and <code>afterEach()</code> is executed after each individual <code>it()</code> method.</p>
@@ -187,17 +187,15 @@ describe('Acceptance: Login page shows form', function () {
 <div class="paragraph">
 <p>Now what&#8217;s happening. Well, since <code>before()</code> runs before <strong>all</strong> <code>it()</code> methods, and <code>after()</code> runs after <strong>all</strong> <code>it()</code> methods, we have a single app instance being created, and then three expectations happening before the app instance is destroyed.</p>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock warning">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-<strong>WARNING</strong>: Creating your app in <code>before()</code> means that all your nested functionality is using the same app, with the same state. So, if you click a check-box in one test, it&#8217;ll stay clicked for the next test unless you reset your state somehow!
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p><strong>WARNING</strong>: Creating your app in <code>before()</code> means that all your nested functionality is using the same app, with the same state. So, if you click a check-box in one test, it&#8217;ll stay clicked for the next test unless you reset your state somehow!</p>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -211,6 +209,10 @@ describe('Acceptance: Login page shows form', function () {
 <p>The second option is to use another mechanism to reset your state to a known starting point before beginning to interact with your application. For instance, you could use <code>visit()</code> to navigate to another route (preferably a very easy to load one, like <code>not-found</code>) and then navigate back to the current route (effectively doing a refresh).</p>
 </div>
 </div>
+</div>
+</td>
+</tr>
+</table>
 </div>]]></description><link>https://ciena-blueplanet.github.io/developers.blog/2016/08/24/Faster-acceptance-tests.html</link><guid isPermaLink="true">https://ciena-blueplanet.github.io/developers.blog/2016/08/24/Faster-acceptance-tests.html</guid><category><![CDATA[mocha]]></category><category><![CDATA[ ember]]></category><category><![CDATA[ testing]]></category><category><![CDATA[ acceptance]]></category><dc:creator><![CDATA[Adam Meadows]]></dc:creator><pubDate>Wed, 24 Aug 2016 00:00:00 GMT</pubDate></item><item><title><![CDATA[Using ember-cli-visual-acceptance]]></title><description><![CDATA[<div class="sect1">
 <h2 id="_installation">Installation</h2>
 <div class="sectionbody">
@@ -400,6 +402,18 @@ test('positional parameter', function(assert) {
 <p>If you put the <code>VISUAL_ACCEPTANCE_TOKEN</code> directly in your code and commit it to Github; Github will revoke the token.</p>
 </li>
 </ul>
+</div>
+<div class="sect2">
+<h3 id="_pushing_only_when_conditions_are_met">Pushing only when conditions are met</h3>
+<div class="paragraph">
+<p>In some instances you may have multiple jobs with your Travis Builds. Wishing only to push in one. Ember-cli-visual-acceptance has added two options to <code>ember tva</code>, <code>push-var</code> and <code>push-on</code>. Using these two options visual acceptance will only push when <code>push-var</code> is equal to <code>push-on</code>. For instance we could do <code>ember tva --push-var=$EMBER_TRY_SCENARIO --push-on=default</code>, so visual acceptance will only push when doing the build job for <code>EMBER_TRY_SCENARIO=default</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_playing_nice_with_pr_bumper_or_doing_your_own_push">Playing nice with Pr-bumper or doing your own push</h3>
+<div class="paragraph">
+<p>Using <code>push-var</code> and <code>push-on</code> we can also stop visual-acceptance from pushing and having only pr-bumper or something else push. This can be accomplished with the following: <code>ember tva --push-condition-compare='false'</code></p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_browsers_html2canvas_vs_phantomjs_render_callback">Browsers - html2canvas vs. PhantomJS render callback</h3>
