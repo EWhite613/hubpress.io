@@ -1,5 +1,6 @@
 = Faster acceptance tests
-:hp-tags: mocha, ember, testing, acceptance
+:hp-tags: mocha, ember, testing, acceptance,
+
 You may have noticed that when working with `ember-cli-mocha`, acceptance tests created with
 
 ```
