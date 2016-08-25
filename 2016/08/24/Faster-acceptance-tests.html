@@ -11,10 +11,10 @@
     <link href="//fonts.googleapis.com/css?family=Noto+Sans:300,400,700" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/style.css?v=1472137864976" rel="stylesheet" type="text/css">
-    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/animate.min.css?v=1472137864976" rel="stylesheet" type="text/css">
+    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/style.css?v=1472137907574" rel="stylesheet" type="text/css">
+    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/animate.min.css?v=1472137907574" rel="stylesheet" type="text/css">
     <link href="https://ciena-blueplanet.github.io/developers.blog/favicon.ico" rel="shortcut icon">
-    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/railcasts.css?v=1472137864976" rel="stylesheet" type="text/css">
+    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/railcasts.css?v=1472137907574" rel="stylesheet" type="text/css">
     <link rel="canonical" href="https://ciena-blueplanet.github.io/developers.blog/2016/08/24/Faster-acceptance-tests.html" />
     <meta name="referrer" content="origin" />
     
@@ -252,15 +252,17 @@ describe('Acceptance: Login page shows form', function () {
 <div class="paragraph">
 <p>Now what&#8217;s happening. Well, since <code>before()</code> runs before <strong>all</strong> <code>it()</code> methods, and <code>after()</code> runs after <strong>all</strong> <code>it()</code> methods, we have a single app instance being created, and then three expectations happening before the app instance is destroyed.</p>
 </div>
-<div class="admonitionblock warning">
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p><strong>WARNING</strong>: Creating your app in <code>before()</code> means that all your nested functionality is using the same app, with the same state. So, if you click a check-box in one test, it&#8217;ll stay clicked for the next test unless you reset your state somehow!</p>
+<strong>WARNING</strong>: Creating your app in <code>before()</code> means that all your nested functionality is using the same app, with the same state. So, if you click a check-box in one test, it&#8217;ll stay clicked for the next test unless you reset your state somehow!
+</td>
+</tr>
+</table>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -274,10 +276,6 @@ describe('Acceptance: Login page shows form', function () {
 <p>The second option is to use another mechanism to reset your state to a known starting point before beginning to interact with your application. For instance, you could use <code>visit()</code> to navigate to another route (preferably a very easy to load one, like <code>not-found</code>) and then navigate back to the current route (effectively doing a refresh).</p>
 </div>
 </div>
-</div>
-</td>
-</tr>
-</table>
 </div>
         </section>
 
@@ -307,7 +305,7 @@ describe('Acceptance: Login page shows form', function () {
 
         hljs.initHighlightingOnLoad();
       </script>
-    <script src="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/js/scripts.js?v=1472137864976"></script>
+    <script src="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/js/scripts.js?v=1472137907574"></script>
     
 </body>
 </html>
