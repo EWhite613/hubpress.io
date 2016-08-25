@@ -141,6 +141,14 @@ before_script:
 
 * Add `VISUAL_ACCEPTANCE_TOKEN` token, value can be found link:https://travis-ci.org/ciena-frost/ember-frost-file-picker/jobs/137522760#L275[here]
   * If you put the `VISUAL_ACCEPTANCE_TOKEN` directly in your code and commit it to Github; Github will revoke the token.
+  
+=== Pushing only when conditions are met
+
+In some instances you may have multiple jobs with your Travis Builds. Wishing only to push in one. Ember-cli-visual-acceptance has added two options to `ember tva`, `push-var` and `push-on`. Using these two options visual acceptance will only push when `push-var` is equal to `push-on`. For instance we could do `ember tva --push-var=$EMBER_TRY_SCENARIO --push-on=default`, so visual acceptance will only push when doing the build job for `EMBER_TRY_SCENARIO=default`.
+  
+=== Playing nice with Pr-bumper or doing your own push
+
+Using `push-var` and `push-on` we can also stop visual-acceptance from pushing and having only pr-bumper or something else push. This can be accomplished with the following: `ember tva --push-condition-compare='false'`
 
 === Browsers - html2canvas vs. PhantomJS render callback
 
