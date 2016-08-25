@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://ciena-blueplanet.github.io/developers.blog</link><generator>RSS for Node</generator><lastBuildDate>Thu, 25 Aug 2016 04:06:54 GMT</lastBuildDate><atom:link href="https://ciena-blueplanet.github.io/developers.blog/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Faster acceptance tests]]></title><description><![CDATA[<div class="listingblock">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://ciena-blueplanet.github.io/developers.blog</link><generator>RSS for Node</generator><lastBuildDate>Thu, 25 Aug 2016 04:07:55 GMT</lastBuildDate><atom:link href="https://ciena-blueplanet.github.io/developers.blog/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Faster acceptance tests]]></title><description><![CDATA[<div class="paragraph">
+<p>You may have noticed that when working with <code>ember-cli-mocha</code>, acceptance tests created with</p>
+</div>
+<div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>ember g acceptance-test &lt;name&gt;</code></pre>
 </div>
