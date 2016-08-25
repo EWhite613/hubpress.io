@@ -11,10 +11,10 @@
     <link href="//fonts.googleapis.com/css?family=Noto+Sans:300,400,700" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/style.css?v=1472137907574" rel="stylesheet" type="text/css">
-    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/animate.min.css?v=1472137907574" rel="stylesheet" type="text/css">
+    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/style.css?v=1472138239380" rel="stylesheet" type="text/css">
+    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/animate.min.css?v=1472138239380" rel="stylesheet" type="text/css">
     <link href="https://ciena-blueplanet.github.io/developers.blog/favicon.ico" rel="shortcut icon">
-    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/railcasts.css?v=1472137907574" rel="stylesheet" type="text/css">
+    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/railcasts.css?v=1472138239380" rel="stylesheet" type="text/css">
     <link rel="canonical" href="https://ciena-blueplanet.github.io/developers.blog/2016/08/24/Faster-acceptance-tests.html" />
     <meta name="referrer" content="origin" />
     
@@ -72,7 +72,7 @@ null
 </div>
 </div>
 <div class="paragraph">
-<p>Can run rather slowly if you use proper BDD ettiquette and include an <code>it()</code> for every <code>expect()</code>. This is due primarily to the fact that the application is created in a top-level <code>beforeEach()</code> and destroyed in a top-level <code>afterEach()</code> While this makes your tests very nicely independenty, it can also make your tests rather slow, since the app is created and your route rendererd independently for each <code>it()</code>.</p>
+<p>Can run rather slowly if you use proper BDD ettiquette and include an <code>it()</code> for every <code>expect()</code>. This is due primarily to the fact that the application is created in a top-level <code>beforeEach()</code> and destroyed in a top-level <code>afterEach()</code> While this makes your tests very nicely independent, it can also make your tests rather slow, since the app is created and your route rendererd independently for each <code>it()</code>.</p>
 </div>
 <div class="paragraph">
 <p>If you&#8217;re like me, you often set up a scenario in your <code>beforeEach()</code> and then have a few different things you want to verify expected behavior for, without changing the state of your application. In cases like those, what you really want is <code>before()</code> and <code>after()</code> instead of <code>beforeEach()</code> and <code>afterEach()</code>. Inside a <code>describe()</code>, <code>before()</code> is executed once, then all the <code>it()</code> methods are executed, then the <code>after()</code> is executed once. On the other hand, as the name suggests <code>beforeEach()</code> is exectued before each individual <code>it()</code> method and <code>afterEach()</code> is executed after each individual <code>it()</code> method.</p>
@@ -305,7 +305,7 @@ describe('Acceptance: Login page shows form', function () {
 
         hljs.initHighlightingOnLoad();
       </script>
-    <script src="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/js/scripts.js?v=1472137907574"></script>
+    <script src="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/js/scripts.js?v=1472138239380"></script>
     
 </body>
 </html>
