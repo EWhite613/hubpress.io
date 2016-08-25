@@ -166,6 +166,7 @@ Now what's happening. Well, since `before()` runs before *all* `it()` methods, a
 
 
 [WARNING]
+=================
 *WARNING*: Creating your app in `before()` means that all your nested functionality is using the same app, with the same state. So, if you click a check-box in one test, it'll stay clicked for the next test unless you reset your state somehow!
 ========================================
 
