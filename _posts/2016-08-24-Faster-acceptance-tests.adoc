@@ -1,0 +1,176 @@
+= Faster acceptance tests
+
+You may have noticed that when working with `ember-cli-mocha`, acceptance tests created with
+
+```
+ember g acceptance-test <name>
+```
+
+Can run rather slowly if you use proper BDD ettiquette and include an `it()` for every `expect()`. This is due primarily to the fact that the application is created in a top-level `beforeEach()` and destroyed in a top-level `afterEach()` While this makes your tests very nicely independenty, it can also make your tests rather slow, since the app is created and your route rendererd independently for each `it()`.
+
+If you're like me, you often set up a scenario in your `beforeEach()` and then have a few different things you want to verify expected behavior for, without changing the state of your application. In cases like those, what you really want is `before()` and `after()` instead of `beforeEach()` and `afterEach()`. Inside a `describe()`, `before()` is executed once, then all the `it()` methods are executed, then the `after()` is executed once. On the other hand, as the name suggests `beforeEach()` is exectued before each individual `it()` method and `afterEach()` is executed after each individual `it()` method.
+
+So, what happens when the following test is run?
+
+```js
+import {afterEach, beforeEach, describe, it} from 'mocha'
+import {expect} from 'chai'
+import startApp from '../../../helpers/start-app'
+import destroyApp from '../../../helpers/destroy-app'
+
+describe('Acceptance: Login page shows form', function () {
+  let application
+
+  beforeEach(function () {
+    application = startApp()
+    visit('/login')
+  })
+
+  afterEach(function () {
+    destroyApp(application)
+  })
+
+  it('should display the company logo', function () {
+    expect(find('img.logo')).to.have.length(1)
+  })
+
+  it('should display a username input', function () {
+    expect(find('input[type=text].username')).to.have.length(1)
+  })
+
+  it('should display a password input', function () {
+    expect(find('input[type=password].password')).to.have.length(1)
+  })
+})
+```
+
+Well, since we're using the default `beforeEach()` to perform the `startApp()` call, and we have 3 `it()` methods, the app is being created 3 times, and each time a single expectation is being verified.
+
+Now, you may be thinking, if I want to speed that up, all I have to do is combine the `it()` methods. After all, `beforeEach()` will run once for each `it()`, so if I only want it to run once, I should just have a single `it()`.
+
+Seems logical... right?
+
+Wrong.
+
+Don't do that.
+
+No one wants to see this test:
+```js
+import {afterEach, beforeEach, describe, it} from 'mocha'
+import {expect} from 'chai'
+import startApp from '../../../helpers/start-app'
+import destroyApp from '../../../helpers/destroy-app'
+
+describe('Acceptance: Login page shows form', function () {
+  let application
+
+  beforeEach(function () {
+    application = startApp()
+    visit('/login')
+  })
+
+  afterEach(function () {
+    destroyApp(application)
+  })
+
+  it('should render the logo and login form', function () {
+    expect(find('img.logo')).to.have.length(1)
+    expect(find('input[type=text].username')).to.have.length(1)
+    expect(find('input[type=password].password')).to.have.length(1)
+  })
+})
+```
+
+.And here's why:
+ . It doesn't read well.
+ . Failures are difficult to track down
+
+Sure, you can try to mitigate #2 by doing something like this:
+```js
+
+import {afterEach, beforeEach, describe, it} from 'mocha'
+import {expect} from 'chai'
+import startApp from '../../../helpers/start-app'
+import destroyApp from '../../../helpers/destroy-app'
+
+describe('Acceptance: Login page shows form', function () {
+  let application
+
+  beforeEach(function () {
+    application = startApp()
+    visit('/login')
+  })
+
+  afterEach(function () {
+    destroyApp(application)
+  })
+
+  it('should render the logo and login form', function () {
+    expect(
+      find('img.logo'),
+      'the logo should be shown'
+    ).to.have.length(1)
+
+    expect(
+      find('input[type=text].username'),
+      'the username input should be shown'
+    ).to.have.length(1)
+
+    expect(
+      find('input[type=password].password'),
+      'the password input should be shown'
+    ).to.have.length(1)
+  })
+})
+```
+
+But really, you can't honestly tell me that's easy to read/follow.
+
+Instead, embrace the power of `before()` and speed up your test without losing readability or ease of debugging:
+
+```js
+import {after, before, describe, it} from 'mocha'
+import {expect} from 'chai'
+import startApp from '../../../helpers/start-app'
+import destroyApp from '../../../helpers/destroy-app'
+
+describe('Acceptance: Login page shows form', function () {
+  let application
+
+  before(function () {
+    application = startApp()
+    visit('/login')
+  })
+
+  after(function () {
+    destroyApp(application)
+  })
+
+  it('should display the company logo', function () {
+    expect(find('img.logo')).to.have.length(1)
+  })
+
+  it('should display a username input', function () {
+    expect(find('input[type=text].username')).to.have.length(1)
+  })
+
+  it('should display a password input', function () {
+    expect(find('input[type=password].password')).to.have.length(1)
+  })
+})
+
+```
+
+Now what's happening. Well, since `before()` runs before *all* `it()` methods, and `after()` runs after *all* `it()` methods, we have a single app instance being created, and then three expectations happening before the app instance is destroyed.
+
+
+[WARNING]
+========================================
+*WARNING*: Creating your app in `before()` means that all your nested functionality is using the same app, with the same state. So, if you click a check-box in one test, it'll stay clicked for the next test unless you reset your state somehow!
+========================================
+
+The above limitation means you have two options when writing acceptance tests, since I don't consider having to clean up after yourself after every interaction with your app a valid option.
+
+The first option is to create a new `describe()` with it's own `startApp()` and `destroyApp()` for each interaction you want to test. This is a valid option in many situations, but may not be as desirable in others.
+
+The second option is to use another mechanism to reset your state to a known starting point before beginning to interact with your application. For instance, you could use `visit()` to navigate to another route (preferably a very easy to load one, like `not-found`) and then navigate back to the current route (effectively doing a refresh).
