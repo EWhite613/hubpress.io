@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://ciena-blueplanet.github.io/developers.blog</link><generator>RSS for Node</generator><lastBuildDate>Thu, 25 Aug 2016 04:08:18 GMT</lastBuildDate><atom:link href="https://ciena-blueplanet.github.io/developers.blog/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Faster acceptance tests]]></title><description><![CDATA[<div class="paragraph">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://ciena-blueplanet.github.io/developers.blog</link><generator>RSS for Node</generator><lastBuildDate>Thu, 25 Aug 2016 04:11:25 GMT</lastBuildDate><atom:link href="https://ciena-blueplanet.github.io/developers.blog/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Faster acceptance tests]]></title><description><![CDATA[<div class="paragraph">
 <p>You may have noticed that when working with <code>ember-cli-mocha</code>, acceptance tests created with</p>
 </div>
 <div class="listingblock">
@@ -187,20 +187,20 @@ describe('Acceptance: Login page shows form', function () {
 <div class="paragraph">
 <p>Now what&#8217;s happening. Well, since <code>before()</code> runs before <strong>all</strong> <code>it()</code> methods, and <code>after()</code> runs after <strong>all</strong> <code>it()</code> methods, we have a single app instance being created, and then three expectations happening before the app instance is destroyed.</p>
 </div>
-<div class="admonitionblock warning">
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p><strong>WARNING</strong>: Creating your app in <code>before()</code> means that all your nested functionality is using the same app, with the same state. So, if you click a check-box in one test, it&#8217;ll stay clicked for the next test unless you reset your state somehow!</p>
-</div>
+<strong>WARNING</strong>: Creating your app in <code>before()</code> means that all your nested functionality is using the same app, with the same state. So, if you click a check-box in one test, it&#8217;ll stay clicked for the next test unless you reset your state somehow!
 </td>
 </tr>
 </table>
 </div>
+<div class="exampleblock">
+<div class="content">
 <div class="paragraph">
 <p>The above limitation means you have two options when writing acceptance tests, since I don&#8217;t consider having to clean up after yourself after every interaction with your app a valid option.</p>
 </div>
@@ -209,6 +209,8 @@ describe('Acceptance: Login page shows form', function () {
 </div>
 <div class="paragraph">
 <p>The second option is to use another mechanism to reset your state to a known starting point before beginning to interact with your application. For instance, you could use <code>visit()</code> to navigate to another route (preferably a very easy to load one, like <code>not-found</code>) and then navigate back to the current route (effectively doing a refresh).</p>
+</div>
+</div>
 </div>]]></description><link>https://ciena-blueplanet.github.io/developers.blog/2016/08/24/Faster-acceptance-tests.html</link><guid isPermaLink="true">https://ciena-blueplanet.github.io/developers.blog/2016/08/24/Faster-acceptance-tests.html</guid><category><![CDATA[mocha]]></category><category><![CDATA[ ember]]></category><category><![CDATA[ testing]]></category><category><![CDATA[ acceptance]]></category><dc:creator><![CDATA[Adam Meadows]]></dc:creator><pubDate>Wed, 24 Aug 2016 00:00:00 GMT</pubDate></item><item><title><![CDATA[Using ember-cli-visual-acceptance]]></title><description><![CDATA[<div class="sect1">
 <h2 id="_installation">Installation</h2>
 <div class="sectionbody">
