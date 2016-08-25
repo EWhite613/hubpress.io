@@ -1,3 +1,0 @@
-= Test
-:published_at: 2016-08-09
-:hp-tags: test
