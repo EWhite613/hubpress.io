@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Faster acceptance tests</title>
+    <meta name="description" content="" />
+    <link href="//fonts.googleapis.com/css?family=Noto+Sans:300,400,700" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic" rel="stylesheet" type="text/css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/style.css?v=1472098098200" rel="stylesheet" type="text/css">
+    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/animate.min.css?v=1472098098200" rel="stylesheet" type="text/css">
+    <link href="https://ciena-blueplanet.github.io/developers.blog/favicon.ico" rel="shortcut icon">
+    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/railcasts.css?v=1472098098200" rel="stylesheet" type="text/css">
+    <link rel="canonical" href="https://ciena-blueplanet.github.io/developers.blog/2016/08/24/Faster-acceptance-tests.html" />
+    <meta name="referrer" content="origin" />
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Faster acceptance tests" />
+    <meta property="og:description" content="You may have noticed that when working with ember-cli-mocha, acceptance tests created with ember g acceptance-test &amp;lt;name&amp;gt; Can run rather slowly if you use proper BDD ettiquette and include an it() for every expect(). This is due primarily to the fact that the application is created in a" />
+    <meta property="og:url" content="https://ciena-blueplanet.github.io/developers.blog/2016/08/24/Faster-acceptance-tests.html" />
+    <meta property="article:tag" content="mocha" />
+    <meta property="article:tag" content=" ember" />
+    <meta property="article:tag" content=" testing" />
+    <meta property="article:tag" content=" acceptance" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Faster acceptance tests" />
+    <meta name="twitter:description" content="You may have noticed that when working with ember-cli-mocha, acceptance tests created with ember g acceptance-test &amp;lt;name&amp;gt; Can run rather slowly if you use proper BDD ettiquette and include an it() for every expect(). This is due primarily to the fact that the application is created in a" />
+    <meta name="twitter:url" content="https://ciena-blueplanet.github.io/developers.blog/2016/08/24/Faster-acceptance-tests.html" />
+    
+    <script type="application/ld+json">
+null
+    </script>
+
+    <meta name="generator" content="HubPress" />
+    <link rel="alternate" type="application/rss+xml" title="" href="https://ciena-blueplanet.github.io/developers.blog/rss/" />
+</head>
+<body class="post-template tag-mocha tag-ember tag-testing tag-acceptance">
+    <header id="header" class="animated fadeIn">
+    <div class="header-background">
+    <section class="blog-content">
+        <a id="site-url" class="blog-title" href="https://ciena-blueplanet.github.io/developers.blog"></a>
+        <span class="blog-description"></span>
+        <nav class="links fadeIn animated">
+            <ul>
+                <li class="rss"><a title="RSS Feed" href="/rss/"><i class="fa fa-fw fa-rss-square"></i></a></li>
+        
+            </ul>
+        </nav>
+    </section>
+    <section class="header-content">
+        <h1 class="post-title animated fadeInUp">Faster acceptance tests</h1>
+        <span class="post-data"><span class="date animated fadeInUp"><i class="fa fa-clock-o"></i> <time class="timesince date" data-timesince="1472018400" datetime="2016-08-24T00:00" title="24 August 2016">a day ago</time></span>
+            <span class="tags animated fadeInUp"><i class="fa fa-tags"></i> <a href="https://ciena-blueplanet.github.io/developers.blog/tag/mocha/">mocha</a>, <a href="https://ciena-blueplanet.github.io/developers.blog/tag/ember/"> ember</a>, <a href="https://ciena-blueplanet.github.io/developers.blog/tag/testing/"> testing</a>, <a href="https://ciena-blueplanet.github.io/developers.blog/tag/acceptance/"> acceptance</a></span>
+            <span class="author animated fadeInUp"><i class="fa fa-user"></i> <a href="https://ciena-blueplanet.github.io/developers.blog/author/job13er/">Adam Meadows</a></span></span>
+    </section>
+    </div>
+</header>
+<main id="main" class="content">
+    <article itemtype="http://schema.org/BlogPosting" class="animated fadeIn content post post tag-mocha tag-ember tag-testing tag-acceptance">
+        <section class="post-content">
+            <div class="paragraph">
+<p>You may have noticed that when working with <code>ember-cli-mocha</code>, acceptance tests created with</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>ember g acceptance-test &lt;name&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Can run rather slowly if you use proper BDD ettiquette and include an <code>it()</code> for every <code>expect()</code>. This is due primarily to the fact that the application is created in a top-level <code>beforeEach()</code> and destroyed in a top-level <code>afterEach()</code> While this makes your tests very nicely independenty, it can also make your tests rather slow, since the app is created and your route rendererd independently for each <code>it()</code>.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re like me, you often set up a scenario in your <code>beforeEach()</code> and then have a few different things you want to verify expected behavior for, without changing the state of your application. In cases like those, what you really want is <code>before()</code> and <code>after()</code> instead of <code>beforeEach()</code> and <code>afterEach()</code>. Inside a <code>describe()</code>, <code>before()</code> is executed once, then all the <code>it()</code> methods are executed, then the <code>after()</code> is executed once. On the other hand, as the name suggests <code>beforeEach()</code> is exectued before each individual <code>it()</code> method and <code>afterEach()</code> is executed after each individual <code>it()</code> method.</p>
+</div>
+<div class="paragraph">
+<p>So, what happens when the following test is run?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">import {afterEach, beforeEach, describe, it} from 'mocha'
+import {expect} from 'chai'
+import startApp from '../../../helpers/start-app'
+import destroyApp from '../../../helpers/destroy-app'
+
+describe('Acceptance: Login page shows form', function () {
+  let application
+
+  beforeEach(function () {
+    application = startApp()
+    visit('/login')
+  })
+
+  afterEach(function () {
+    destroyApp(application)
+  })
+
+  it('should display the company logo', function () {
+    expect(find('img.logo')).to.have.length(1)
+  })
+
+  it('should display a username input', function () {
+    expect(find('input[type=text].username')).to.have.length(1)
+  })
+
+  it('should display a password input', function () {
+    expect(find('input[type=password].password')).to.have.length(1)
+  })
+})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Well, since we&#8217;re using the default <code>beforeEach()</code> to perform the <code>startApp()</code> call, and we have 3 <code>it()</code> methods, the app is being created 3 times, and each time a single expectation is being verified.</p>
+</div>
+<div class="paragraph">
+<p>Now, you may be thinking, if I want to speed that up, all I have to do is combine the <code>it()</code> methods. After all, <code>beforeEach()</code> will run once for each <code>it()</code>, so if I only want it to run once, I should just have a single <code>it()</code>.</p>
+</div>
+<div class="paragraph">
+<p>Seems logical&#8230;&#8203; right?</p>
+</div>
+<div class="paragraph">
+<p>Wrong.</p>
+</div>
+<div class="paragraph">
+<p>Don&#8217;t do that.</p>
+</div>
+<div class="paragraph">
+<p>No one wants to see this test:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">import {afterEach, beforeEach, describe, it} from 'mocha'
+import {expect} from 'chai'
+import startApp from '../../../helpers/start-app'
+import destroyApp from '../../../helpers/destroy-app'
+
+describe('Acceptance: Login page shows form', function () {
+  let application
+
+  beforeEach(function () {
+    application = startApp()
+    visit('/login')
+  })
+
+  afterEach(function () {
+    destroyApp(application)
+  })
+
+  it('should render the logo and login form', function () {
+    expect(find('img.logo')).to.have.length(1)
+    expect(find('input[type=text].username')).to.have.length(1)
+    expect(find('input[type=password].password')).to.have.length(1)
+  })
+})</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<div class="title">And here&#8217;s why:</div>
+<ol class="arabic">
+<li>
+<p>It doesn&#8217;t read well.</p>
+</li>
+<li>
+<p>Failures are difficult to track down</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Sure, you can try to mitigate #2 by doing something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">import {afterEach, beforeEach, describe, it} from 'mocha'
+import {expect} from 'chai'
+import startApp from '../../../helpers/start-app'
+import destroyApp from '../../../helpers/destroy-app'
+
+describe('Acceptance: Login page shows form', function () {
+  let application
+
+  beforeEach(function () {
+    application = startApp()
+    visit('/login')
+  })
+
+  afterEach(function () {
+    destroyApp(application)
+  })
+
+  it('should render the logo and login form', function () {
+    expect(
+      find('img.logo'),
+      'the logo should be shown'
+    ).to.have.length(1)
+
+    expect(
+      find('input[type=text].username'),
+      'the username input should be shown'
+    ).to.have.length(1)
+
+    expect(
+      find('input[type=password].password'),
+      'the password input should be shown'
+    ).to.have.length(1)
+  })
+})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But really, you can&#8217;t honestly tell me that&#8217;s easy to read/follow.</p>
+</div>
+<div class="paragraph">
+<p>Instead, embrace the power of <code>before()</code> and speed up your test without losing readability or ease of debugging:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">import {after, before, describe, it} from 'mocha'
+import {expect} from 'chai'
+import startApp from '../../../helpers/start-app'
+import destroyApp from '../../../helpers/destroy-app'
+
+describe('Acceptance: Login page shows form', function () {
+  let application
+
+  before(function () {
+    application = startApp()
+    visit('/login')
+  })
+
+  after(function () {
+    destroyApp(application)
+  })
+
+  it('should display the company logo', function () {
+    expect(find('img.logo')).to.have.length(1)
+  })
+
+  it('should display a username input', function () {
+    expect(find('input[type=text].username')).to.have.length(1)
+  })
+
+  it('should display a password input', function () {
+    expect(find('input[type=password].password')).to.have.length(1)
+  })
+})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now what&#8217;s happening. Well, since <code>before()</code> runs before <strong>all</strong> <code>it()</code> methods, and <code>after()</code> runs after <strong>all</strong> <code>it()</code> methods, we have a single app instance being created, and then three expectations happening before the app instance is destroyed.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>WARNING</strong>: Creating your app in <code>before()</code> means that all your nested functionality is using the same app, with the same state. So, if you click a check-box in one test, it&#8217;ll stay clicked for the next test unless you reset your state somehow!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The above limitation means you have two options when writing acceptance tests, since I don&#8217;t consider having to clean up after yourself after every interaction with your app a valid option.</p>
+</div>
+<div class="paragraph">
+<p>The first option is to create a new <code>describe()</code> with it&#8217;s own <code>startApp()</code> and <code>destroyApp()</code> for each interaction you want to test. This is a valid option in many situations, but may not be as desirable in others.</p>
+</div>
+<div class="paragraph">
+<p>The second option is to use another mechanism to reset your state to a known starting point before beginning to interact with your application. For instance, you could use <code>visit()</code> to navigate to another route (preferably a very easy to load one, like <code>not-found</code>) and then navigate back to the current route (effectively doing a refresh).</p>
+</div>
+        </section>
+
+    </article>
+
+</main>
+    <footer class="animated fadeIn" id="footer">
+        <section class="colophon">
+          <section class="copyright">Copyright &copy; <span itemprop="copyrightHolder"></span>. <span rel="license">All Rights Reserved</span>.</section>
+          <section class="poweredby">Published with <a class="icon-ghost" href="http://hubpress.io">HubPress</a></section>
+        </section>
+        <section class="bottom">
+          <section class="attribution">
+            <a href="http://github.com/Reedyn/Saga">Built with <i class="fa fa-heart"></i> and Free and Open-Source Software</a>.
+          </section>
+        </section>
+    </footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();
+      </script>
+    <script src="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/js/scripts.js?v=1472098098200"></script>
+    
+</body>
+</html>
