@@ -7,7 +7,7 @@ You may have noticed that when working with `ember-cli-mocha`, acceptance tests 
 ember g acceptance-test <name>
 ```
 
-Can run rather slowly if you use proper BDD ettiquette and include an `it()` for every `expect()`. This is due primarily to the fact that the application is created in a top-level `beforeEach()` and destroyed in a top-level `afterEach()` While this makes your tests very nicely independenty, it can also make your tests rather slow, since the app is created and your route rendererd independently for each `it()`.
+Can run rather slowly if you use proper BDD ettiquette and include an `it()` for every `expect()`. This is due primarily to the fact that the application is created in a top-level `beforeEach()` and destroyed in a top-level `afterEach()` While this makes your tests very nicely independent, it can also make your tests rather slow, since the app is created and your route rendererd independently for each `it()`.
 
 If you're like me, you often set up a scenario in your `beforeEach()` and then have a few different things you want to verify expected behavior for, without changing the state of your application. In cases like those, what you really want is `before()` and `after()` instead of `beforeEach()` and `afterEach()`. Inside a `describe()`, `before()` is executed once, then all the `it()` methods are executed, then the `after()` is executed once. On the other hand, as the name suggests `beforeEach()` is exectued before each individual `it()` method and `afterEach()` is executed after each individual `it()` method.
 
