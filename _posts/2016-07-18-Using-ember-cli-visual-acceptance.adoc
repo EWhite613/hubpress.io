@@ -140,7 +140,7 @@ before_script:
 * Add `RO_GH_TOKEN` Unsecure token that can only read.
 
 * Add `VISUAL_ACCEPTANCE_TOKEN` token, value can be found link:https://travis-ci.org/ciena-frost/ember-frost-file-picker/jobs/137522760#L275[here]
-  * If you put the `VISUAL_ACCEPTANCE_TOKEN` directly in your code and commit it to Github; Github will revoke the token.
+  * If you put the `VISUAL_ACCEPTANCE_TOKEN` directly in your code and commit it to Github; Github will revoke the token. So it may be smart for you to create your own dummy Github account, and create a personal access token that has it's repo scope set.
   
 === Pushing only when conditions are met
 
