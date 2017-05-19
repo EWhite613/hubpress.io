@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://ciena-blueplanet.github.io/developers.blog</link><generator>RSS for Node</generator><lastBuildDate>Fri, 19 May 2017 18:02:36 GMT</lastBuildDate><atom:link href="https://ciena-blueplanet.github.io/developers.blog/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Faster acceptance tests]]></title><description><![CDATA[<div class="paragraph">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Untitled RSS Feed]]></title><description><![CDATA[Untitled RSS Feed]]></description><link>https://ciena-blueplanet.github.io/developers.blog</link><generator>RSS for Node</generator><lastBuildDate>Fri, 19 May 2017 18:04:30 GMT</lastBuildDate><atom:link href="https://ciena-blueplanet.github.io/developers.blog/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Faster acceptance tests]]></title><description><![CDATA[<div class="paragraph">
 <p>You may have noticed that when working with <code>ember-cli-mocha</code>, acceptance tests created with</p>
 </div>
 <div class="listingblock">
@@ -394,7 +394,7 @@ test('positional parameter', function(assert) {
 <p>Add <code>RO_GH_TOKEN</code> Unsecure token that can only read.</p>
 </li>
 <li>
-<p>Add <code>VISUAL_ACCEPTANCE_TOKEN</code> token, value can be found <a href="https://travis-ci.org/ciena-frost/ember-frost-file-picker/jobs/137522760#L275">here</a></p>
+<p>Add <code>VISUAL_ACCEPTANCE_TOKEN</code> token, value can be found <a href="https://travis-ci.org/ciena-blueplanet/ember-cli-visual-acceptance/builds/234089652#L261">here</a></p>
 </li>
 <li>
 <p>If you put the <code>VISUAL_ACCEPTANCE_TOKEN</code> directly in your code and commit it to Github; Github will revoke the token. So it may be smart for you to create your own dummy Github account, and create a personal access token that has it&#8217;s repo scope set.</p>
