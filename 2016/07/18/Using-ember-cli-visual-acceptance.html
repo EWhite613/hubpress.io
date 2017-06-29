@@ -11,10 +11,10 @@
     <link href="//fonts.googleapis.com/css?family=Noto+Sans:300,400,700" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/style.css?v=1498748027221" rel="stylesheet" type="text/css">
-    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/animate.min.css?v=1498748027221" rel="stylesheet" type="text/css">
+    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/style.css?v=1498749137695" rel="stylesheet" type="text/css">
+    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/animate.min.css?v=1498749137695" rel="stylesheet" type="text/css">
     <link href="https://ciena-blueplanet.github.io/developers.blog/favicon.ico" rel="shortcut icon">
-    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/railcasts.css?v=1498748027221" rel="stylesheet" type="text/css">
+    <link href="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/css/railcasts.css?v=1498749137695" rel="stylesheet" type="text/css">
     <link rel="canonical" href="https://ciena-blueplanet.github.io/developers.blog/2016/07/18/Using-ember-cli-visual-acceptance.html" />
     <meta name="referrer" content="origin" />
     
@@ -272,7 +272,7 @@ test('positional parameter', function(assert) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_browsers_html2canvas_vs_phantomjs_render_callback">Browsers - html2canvas vs. PhantomJS render callback</h3>
+<h3 id="_nightmarejs_electron_vs_browsers_html2canvas_vs_phantomjs_render_callback">NightmareJS (Electron) vs Browsers - html2canvas vs. PhantomJS render callback</h3>
 <div class="paragraph">
 <p>You must enable the display to use headless browsers by adding the following to the <code>before_script</code> hook:</p>
 </div>
@@ -282,6 +282,15 @@ test('positional parameter', function(assert) {
 - "export DISPLAY=:99.0"
 - "sh -e /etc/init.d/xvfb start"
 - sleep 3 # give xvfb some time to start</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_nightmarejs_electron">NightmareJS (Electron)</h4>
+<div class="paragraph">
+<p><a href="https://github.com/segmentio/nightmare">Nightmare</a> takes a screenshot with Electron and provides the most accurate image. Using nightmare requires the <code>nightmare</code> and <code>nightmare-custom-event</code> packages to be saved to your dev dependencies <code>npm install nightmare nightmare-custom-event --save-dev</code> (if using the visual acceptance blueprint this will be automatic)</p>
+</div>
+<div class="paragraph">
+<p>If a captured image comes up blank or cutoff you should edit the <code>vendor/nightmarejs-launcher.js</code> file to increase the viewport (the default is <code>.viewport(3000, 10000)</code> width by height). The reason for this is Electron can only screenshot what it can see, and the test page continously grows with the more tests you have. This solution costs less than attempting to scroll the ember testing rectangle in frame, and resizing Electron to fit the image. Additionally, as long as Nightmare&#8217;s <code>show</code> option is not set to <code>true</code> you can get away with setting ludicrous sizes.</p>
 </div>
 </div>
 <div class="sect3">
@@ -313,6 +322,39 @@ You can use this experimental feature by setting <code>experimentalSvgs</code> t
 </div>
 <div class="paragraph">
 <p>Experimental SVGs will not be used for PhantomJS, SlimerJS, and Chrome/Chromium (Chrome properly renders svgs with html2canvas) as their rendering handles SVGs (PhantomJS and SlimerJS basically just take a screenshot of the page)</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_nightmare">Using Nightmare</h4>
+<div class="listingblock">
+<div class="title">Testem.json</div>
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">{
+  "framework": "mocha",
+  "test_page": "tests/index.html?hidepassed",
+  "disable_watching": true,
+  "launch_in_ci": [
+    "NightmareJsVisualAcceptance"
+  ],
+  "launch_in_dev": [
+    "Firefox"
+  ],
+  "launchers": {
+    "PhantomJsVisualAcceptance": {
+      "command": "phantomjs vendor/phantomjs-launcher.js &lt;url&gt;",
+      "protocol": "browser"
+    },
+    "SlimerJsVisualAcceptance": {
+      "command": "slimerjs -jsconsole vendor/phantomjs-launcher.js &lt;url&gt;",
+      "protocol": "browser"
+    },
+    "NightmareJsVisualAcceptance": {
+      "command": "node vendor/nightmarejs-launcher.js &lt;url&gt;",
+      "protocol": "browser"
+    }
+  }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -523,7 +565,7 @@ setResolver(resolver)</code></pre>
 
         hljs.initHighlightingOnLoad();
       </script>
-    <script src="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/js/scripts.js?v=1498748027221"></script>
+    <script src="//ciena-blueplanet.github.io/developers.blog/themes/saga/assets/js/scripts.js?v=1498749137695"></script>
     
 </body>
 </html>
