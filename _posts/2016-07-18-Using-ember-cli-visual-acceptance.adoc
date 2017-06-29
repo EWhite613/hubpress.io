@@ -153,7 +153,7 @@ Using `push-var` and `push-on` we can also stop visual-acceptance from pushing a
 === Github Enterprise 
 The api endpoint can be specified with the `--github-api-endpoint="http(s)://hostname/api/v3"` option
 
-=== Browsers - html2canvas vs. PhantomJS render callback
+=== NightmareJS (Electron) vs Browsers - html2canvas vs. PhantomJS render callback
 
 You must enable the display to use headless browsers by adding the following to the `before_script` hook: 
 
@@ -164,6 +164,11 @@ before_script:
 - "sh -e /etc/init.d/xvfb start"
 - sleep 3 # give xvfb some time to start
 ----
+
+==== NightmareJS (Electron)
+link:https://github.com/segmentio/nightmare[Nightmare] takes a screenshot with Electron and provides the most accurate image. Using nightmare requires the `nightmare` and `nightmare-custom-event` packages to be saved to your dev dependencies `npm install nightmare nightmare-custom-event --save-dev` (if using the visual acceptance blueprint this will be automatic)
+
+If a captured image comes up blank or cutoff you should edit the `vendor/nightmarejs-launcher.js` file to increase the viewport (the default is `.viewport(3000, 10000)` width by height). The reason for this is Electron can only screenshot what it can see, and the test page continously grows with the more tests you have. This solution costs less than attempting to scroll the ember testing rectangle in frame, and resizing Electron to fit the image. Additionally, as long as Nightmare's `show` option is not set to `true` you can get away with setting ludicrous sizes.
 
 ==== PhantomJS - SlimerJS
 
@@ -187,6 +192,37 @@ You can use this experimental feature by setting `experimentalSvgs` to `true` (E
 
 Experimental SVGs will not be used for PhantomJS, SlimerJS, and Chrome/Chromium (Chrome properly renders svgs with html2canvas) as their rendering handles SVGs (PhantomJS and SlimerJS basically just take a screenshot of the page)
 
+==== Using Nightmare
+[source, javascript]
+.Testem.json
+----
+{
+  "framework": "mocha",
+  "test_page": "tests/index.html?hidepassed",
+  "disable_watching": true,
+  "launch_in_ci": [
+    "NightmareJsVisualAcceptance"
+  ],
+  "launch_in_dev": [
+    "Firefox"
+  ],
+  "launchers": {
+    "PhantomJsVisualAcceptance": {
+      "command": "phantomjs vendor/phantomjs-launcher.js <url>",
+      "protocol": "browser"
+    },
+    "SlimerJsVisualAcceptance": {
+      "command": "slimerjs -jsconsole vendor/phantomjs-launcher.js <url>",
+      "protocol": "browser"
+    },
+    "NightmareJsVisualAcceptance": {
+      "command": "node vendor/nightmarejs-launcher.js <url>",
+      "protocol": "browser"
+    }
+  }
+}
+
+----
 ==== Using Chromium
 To use Chromium on Travis set 
 [source, javascript]
