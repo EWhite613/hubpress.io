@@ -148,7 +148,7 @@ In some instances you may have multiple jobs with your Travis Builds. Wishing on
   
 === Playing nice with Pr-bumper or doing your own push
 
-Using `push-var` and `push-on` we can also stop visual-acceptance from pushing and having only pr-bumper or something else push. This can be accomplished with the following: `ember tva --push-condition-compare='false'`
+Using `push-var` and `push-on` we can also stop visual-acceptance from pushing and having only pr-bumper or something else push. This can be accomplished with the following: `ember tva --push-var='false'`
 
 === Github Enterprise 
 The api endpoint can be specified with the `--github-api-endpoint="http(s)://hostname/api/v3"` option
